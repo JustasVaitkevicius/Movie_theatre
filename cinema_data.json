@@ -1,0 +1,75 @@
+{
+    "movies": [
+        {
+            "title": "The Matrix",
+            "duration": 136,
+            "genre": "Sci-Fi & Fantasy"
+        },
+        {
+            "title": "The Dark Knight",
+            "duration": 152,
+            "genre": "Action & Adventure"
+        },
+        {
+            "title": "Toy Story",
+            "duration": 81,
+            "genre": "Comedy & Animation"
+        },
+        {
+            "title": "Parasite ",
+            "duration": 132,
+            "genre": "Drama & Thriller"
+        },
+        {
+            "title": "A Quiet Place",
+            "duration": 90,
+            "genre": "Horror & Mystery"
+        }
+    ],
+    "halls": [
+        {
+            "hall_number": "1",
+            "capacity": 100
+        },
+        {
+            "hall_number": "2",
+            "capacity": 50
+        }
+    ],
+    "screenings": [
+        {
+            "movie": {
+                "title": "The Matrix",
+                "duration": 136,
+                "genre": "Sci-Fi & Fantasy"
+            },
+            "screening_time": "2025-05-09 12:10",
+            "hall": {
+                "hall_number": "1",
+                "capacity": 100
+            },
+            "available_seats": 99,
+            "tickets_sold": 1
+        }
+    ],
+    "tickets": [
+        {
+            "screening": {
+                "movie": {
+                    "title": "The Matrix",
+                    "duration": 136,
+                    "genre": "Sci-Fi & Fantasy"
+                },
+                "screening_time": "2025-05-09 12:10",
+                "hall": {
+                    "hall_number": "1",
+                    "capacity": 100
+                },
+                "available_seats": 99,
+                "tickets_sold": 1
+            },
+            "seat_number": "B3",
+            "price": 12
+        }
+    ]
+}
