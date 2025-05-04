@@ -2,7 +2,7 @@ import json
 from abc import ABC, abstractmethod
 from datetime import datetime, time
 
-# 1. Abstrakcija - abstrakti bazinė klasė
+
 class DataHandler(ABC):
     @abstractmethod
     def save_data(self, data, filename):
@@ -12,7 +12,7 @@ class DataHandler(ABC):
     def load_data(self, filename):
         pass
 
-# 2. Paveldėjimas - JSON duomenų tvarkytuvė
+
 class JSONDataHandler(DataHandler):
     def save_data(self, data, filename):
         with open(filename, 'w') as file:
@@ -25,7 +25,7 @@ class JSONDataHandler(DataHandler):
         except FileNotFoundError:
             return None
 
-# 3. Inkapsuliacija - Filmų klasė su privatais kintamaisiais
+
 class Movie:
     def __init__(self, title, duration, genre):
         self.__title = title
@@ -71,7 +71,7 @@ class Movie:
     def from_dict(cls, data):
         return cls(data['title'], data['duration'], data['genre'])
 
-# Kino salės klasė
+
 class CinemaHall:
     def __init__(self, hall_number, capacity):
         self.hall_number = hall_number
@@ -87,10 +87,10 @@ class CinemaHall:
     def from_dict(cls, data):
         return cls(data['hall_number'], data['capacity'])
 
-# Seansų klasė (kompozicija su Movie)
+
 class Screening:
     def __init__(self, movie, screening_time, hall):
-        self.movie = movie  # Kompozicija
+        self.movie = movie  
         self.screening_time = screening_time
         self.hall = hall
         self.available_seats = hall.capacity
@@ -115,10 +115,10 @@ class Screening:
         screening.tickets_sold = data['tickets_sold']
         return screening
 
-# Bilietų klasė (agregacija su Screening)
+
 class Ticket:
     def __init__(self, screening, seat_number, price):
-        self.screening = screening  # Agregacija
+        self.screening = screening  
         self.seat_number = seat_number
         self.price = price
         
@@ -134,7 +134,7 @@ class Ticket:
         screening = Screening.from_dict(data['screening'])
         return cls(screening, data['seat_number'], data['price'])
 
-# 4. Singleton dizaino šablonas - Kino teatro valdytojas
+
 class CinemaManager:
     _instance = None
     
@@ -242,7 +242,7 @@ class CinemaManager:
             self.tickets = [Ticket.from_dict(t) for t in data.get('tickets', [])]
             print(f"Duomenys sėkmingai įkelti iš {filename}")
 
-# Vartotojo sąsajos funkcijos
+
 def display_menu():
     print("\n=== KINO TEATRO VALDYMO SISTEMA ===")
     print("1. Peržiūrėti filmus")
