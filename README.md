@@ -1,34 +1,41 @@
 1. Įvadas
- a. Programos aprašymas.
+a. Programos aprašymas
+Ši programa yra kino teatro valdymo sistema, sukurta naudojant Python programavimo kalbą ir objektinio programavimo (OOP) principus. Sistema leidžia:
 
-Ši programa yra kino teatro valdymo sistema, sukurta naudojant Python programavimo kalbą ir objektinio programavimo principus. Sistema leidžia:
+✅ Valdyti filmų katalogą (pridėti, peržiūrėti filmus)
 
-+ Valdyti filmų katalogą (pridėti, peržiūrėti filmus).
+✅ Tvarkyti kino sales (pridėti naujas sales, peržiūrėti esamas)
 
-+ Tvarkyti kino sales (pridėti naujas sales, peržiūrėti esamas).
+✅ Kurti seansus ir tvarkyti jų grafiką
 
-+ Kurti seansus ir tvarkyti jų grafiką.
+✅ Vykdyti bilietų pardavimą su vietų rezervavimu
 
-+ Vykdyti bilietų pardavimą su vietų rezervavimu.
+✅ Automatiškai skaičiuoti bilietų kainas
 
-+ Automatiškai skaičiuoti bilietų kainas.
+✅ Saugoti ir atkurti duomenis iš failo (JSON)
 
-+ Saugoti ir atkurti duomenis iš failo.
+b. Kaip paleisti programą?
+Atsisiųskite Python 3.x
 
- b. Kaip paleisti programą?
+Klonuokite šią GitHub repozitoriją:
 
-+Atsisiųskite Python 3.x iš python.org
+bash
+Copy
+Edit
+git clone https://github.com/jusu-vardas/kino-teatras.git
+cd kino-teatras
+Paleiskite programą terminale:
 
-+Atsisiųskite programos failus iš GitHub repozitorijos
-
-+Terminale įvykdykite:
-
+bash
+Copy
+Edit
 python cinema_system.py
+c. Kaip naudotis programa?
+Programa pateikia tekstinę meniu sąsają:
 
- c. Kaip naudotis programa?
-
-Programa turi intuityvią tekstinę sąsają su meniu:
-
+markdown
+Copy
+Edit
 === KINO TEATRO VALDYMO SISTEMA ===
 1. Peržiūrėti filmus
 2. Peržiūrėti sales
@@ -41,38 +48,49 @@ Programa turi intuityvią tekstinę sąsają su meniu:
 9. Išsaugoti duomenis
 10. Įkelti duomenis
 0. Išeiti
-
-Vartotojas gali lengvai naršyti meniu punktus įvedant atitinkamus skaičius.
+Naudotojas gali pasirinkti veiksmą įvedant atitinkamą skaičių.
 
 2. Analizė
- a. Funkcionalių reikalavimų įgyvendinimas
+a. Funkcionalūs reikalavimai ir jų įgyvendinimas
+1. Objektinio programavimo principai
+Abstrakcija:
 
-1. Objektinio programavimo principai:
-
-# Abstrakcija - DataHandler abstrakti klasė
+python
+Copy
+Edit
 class DataHandler(ABC):
     @abstractmethod
     def save_data(self, data, filename):
         pass
+Paveldėjimas:
 
-# Paveldėjimas - JSONDataHandler paveldi iš DataHandler
+python
+Copy
+Edit
 class JSONDataHandler(DataHandler):
     def save_data(self, data, filename):
         with open(filename, 'w') as file:
             json.dump(data, file, indent=4)
+Inkapsuliacija:
 
-# Inkapsuliacija - privatūs kintamieji Movie klasėje
+python
+Copy
+Edit
 class Movie:
     def __init__(self, title, duration, genre):
         self.__title = title
         self.__duration = duration
         self.__genre = genre
+Polimorfizmas:
 
-# Polimorfizmas - skirtingi DataHandler įgyvendinimai
-json_handler.save_data(data)  # Veikia skirtingai nei CSV handler
-
-2. Singleton dizaino šablonas:
-
+python
+Copy
+Edit
+json_handler.save_data(data)  # Skiriasi nuo CSVHandler elgsenos
+2. Singleton dizaino šablonas
+python
+Copy
+Edit
 class CinemaManager:
     _instance = None
     
@@ -81,21 +99,27 @@ class CinemaManager:
             cls._instance = super().__new__(cls)
             # Inicializacija
         return cls._instance
+3. Kompozicija ir agregacija
+Kompozicija – seansas negali egzistuoti be filmo:
 
-3. Kompozicija ir agregacija:
-
-# Kompozicija - Screening negali egzistuoti be Movie
+python
+Copy
+Edit
 class Screening:
     def __init__(self, movie, screening_time, hall):
         self.movie = movie
+Agregacija – bilietas gali egzistuoti ir be seanso:
 
-# Agregacija - Ticket gali egzistuoti ir be Screening
+python
+Copy
+Edit
 class Ticket:
     def __init__(self, screening, seat_number, price):
         self.screening = screening
-
-4. Duomenų saugojimas:
-
+4. Duomenų saugojimas JSON formatu
+python
+Copy
+Edit
 def save_data(self, filename='cinema_data.json'):
     data = {
         'movies': [m.to_dict() for m in self.movies],
@@ -104,66 +128,41 @@ def save_data(self, filename='cinema_data.json'):
         'tickets': [t.to_dict() for t in self.tickets]
     }
     self.data_handler.save_data(data, filename)
+3. Rezultatai ir išvados
+a. Rezultatai
+✅ Sukurta pilnai veikianti kino teatro valdymo sistema
+✅ Įgyvendinti visi 4 pagrindiniai OOP principai
+✅ Naudotas Singleton dizaino šablonas
+✅ Duomenų saugojimas realizuotas JSON formatu
+✅ Veikia bilietų kainodaros logika
 
-3. Rezultatai ir Išvados
- a. Rezultatai
+b. Iššūkiai
+Sudėtinga derinti Singleton naudojimą su duomenų įkėlimu
 
-+ Sėkmingai sukurta pilna kino teatro valdymo sistema
+Vietų rezervacijos logika reikalavo papildomo testavimo
 
-+ Įgyvendinti visi 4 OOP principai (abstrakcija, paveldėjimas, inkapsuliacija, polimorfizmas)
+Iškilo klaidų serializuojant duomenis
 
-+ Panaudotas Singleton dizaino šablonas
+c. Galimos plėtros kryptys
+ Grafinė vartotojo sąsaja (GUI)
 
-+ Realizuotas duomenų saugojimas JSON formatu
+ Mokėjimų integracija
 
-+ Sukurtas automatinis bilietų kainodaros mechanizmas
+ Vartotojų rolės ir prieigos valdymas
 
- b. Iššūkiai
+ Migracija į duomenų bazę (pvz., SQLite, PostgreSQL)
 
-- Sudėtinga buvo suderinti Singleton šablono naudojimą su duomenų įkėlimu iš failo
+ Atsiliepimų ir įvertinimų sistema
 
-- Vietų rezervacijos logika reikalavo papildomo tobulinimo
+4. Galutinės išvados
+Ši sistema:
 
-- Testavimo metu buvo aptiktos klaidos duomenų serializacija
+✅ Atitinka visus keliamus funkcinius reikalavimus
 
- c. Galimos plėtros kryptys
+✅ Demonstruoja gerą objektinio programavimo praktiką
 
-+ Pridėti grafinę vartotojo sąsają
+✅ Naudoja pažangius architektūrinius principus
 
-+ Integruoti mokėjimo sistemą
+✅ Yra tinkama plėsti ar integruoti su kitomis sistemomis
 
-+ Pridėti vartotojų roles ir prieigos teises
-
-+ Įdiegti duomenų bazę vietoj failų saugojimo
-
-+ Pridėti atsiliepimų ir įvertinimų sistemą
-
-4. Išvados
-
-Šis kursinis darbas sėkmingai įgyvendino kino teatro valdymo sistemą, kuri:
-
-+ Atitinka visus pateiktus reikalavimus:
-
-+ Pilnai įgyvendina 4 OOP principus
-
-+ Naudoja Singleton dizaino šabloną
-
-+ Demonstruoja kompozicijos ir agregacijos principus
-
-+ Turi duomenų saugojimo/įkėlimo funkcionalumą
-
-Yra praktiškai pritaikoma:
-
-+ Turi intuityvią vartotojo sąsają
-
-+ Automatizuoja bilietų kainodarą
-
-+ Leidžia lengvai valdyti seansus ir sales
-
-Toliau plėtojama:
-
-+ Sistemą galima lengvai išplėsti naujomis funkcijomis
-
-+ Architektūra leidžia integruoti papildomus modulius
-
-Ši sistema gali būti naudojama kaip pagrindas profesionalioms kino teatro valdymo sistemoms kurti.
+Potencialas: Gali būti naudojama kaip pagrindas profesionalioms kino teatro sistemoms kurti.
