@@ -81,7 +81,7 @@ class Movie:
 
 Polimorfizmas – skirtingi DataHandler implementacijos:
 
-json_handler.save_data(data)  # Skiriasi nuo CSVHandler elgsenos
+json_handler.save_data(data)
 
 2. Singleton dizaino šablonas
 
@@ -120,7 +120,6 @@ def save_data(self, filename='cinema_data.json'):
         'tickets': [t.to_dict() for t in self.tickets]
     }
     self.data_handler.save_data(data, filename)
-
 
 3. Rezultatai ir Išvados
 
