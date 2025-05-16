@@ -56,21 +56,19 @@ a. Funkcionalių reikalavimų įgyvendinimas
 
 Abstrakcija – DataHandler abstrakti klasė:
 
-from abc import ABC, abstractmethod
-
 class DataHandler(ABC):
     @abstractmethod
     def save_data(self, data, filename):
         pass
 
-Paveldėjimas – JSONDataHandler paveldi iš DataHandler:
 
-import json
+Paveldėjimas – JSONDataHandler paveldi iš DataHandler:
 
 class JSONDataHandler(DataHandler):
     def save_data(self, data, filename):
         with open(filename, 'w') as file:
             json.dump(data, file, indent=4)
+
 
 Inkapsuliacija – privatūs kintamieji Movie klasėje:
 
@@ -80,30 +78,33 @@ class Movie:
         self.__duration = duration
         self.__genre = genre
 
+
 Polimorfizmas – skirtingi DataHandler implementacijos:
 
-json_handler.save_data(data)  # Veikia kitaip nei CSVDataHandler
+json_handler.save_data(data)  # Skiriasi nuo CSVHandler elgsenos
 
 2. Singleton dizaino šablonas
 
 class CinemaManager:
     _instance = None
-
+    
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             # Inicializacija
         return cls._instance
 
+
 3. Kompozicija ir agregacija
 
-Kompozicija – Screening egzistuoja tik kartu su Movie:
+Kompozicija – seansas negali egzistuoti be filmo:
 
 class Screening:
     def __init__(self, movie, screening_time, hall):
         self.movie = movie
 
-Agregacija – Ticket gali egzistuoti be Screening:
+
+Agregacija – bilietas gali egzistuoti ir be seanso:
 
 class Ticket:
     def __init__(self, screening, seat_number, price):
@@ -119,6 +120,7 @@ def save_data(self, filename='cinema_data.json'):
         'tickets': [t.to_dict() for t in self.tickets]
     }
     self.data_handler.save_data(data, filename)
+
 
 3. Rezultatai ir Išvados
 
